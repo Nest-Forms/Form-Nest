@@ -1,0 +1,34 @@
+# Node (for React frontend and possibly Lambda functions if using Node.js)
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Build outputs
+/build
+/dist
+/out
+
+# Terraform
+.terraform
+*.tfstate
+*.tfstate.backup
+*.tfvars
+
+# IDE and Editor Folders
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Optional: Add specific files or folders you want to ignore
+# /path/to/file-or-folder
