@@ -1,10 +1,9 @@
 import React from 'react';
-import LogoutButton from '../components/LogoutButton';
+import NavigationBar from '../components/NavigationBar';
 
 const Dashboard = () => {
     return (
         <div>
-            <LogoutButton />
             <h1>Dashboard</h1>
             <p>Welcome to your dashboard!</p>
             {/* Dashboard content goes here */}

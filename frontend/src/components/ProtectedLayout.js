@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 
 const ProtectedLayout = () => {
     const { user } = useAuth();
-    console.log(user)
     if (!user) {
         // Redirect to login page if not authenticated
         return <Navigate to="/login" replace />;
