@@ -2,9 +2,11 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const RegistrationForm = () => {
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             email: 'williams.t17@gmail.com',
@@ -12,35 +14,31 @@ const RegistrationForm = () => {
             confirmPassword: 'Jr636416a!',
             firstName: 'Tom',
             lastName: 'Williams',
-            companyName: 'Form Nest',
+            companyName: 'Nest Forms',
             role: 'admin',
         },
         validationSchema: Yup.object({
             email: Yup.string().email('Invalid email address').required('Required'),
             password: Yup.string().required('Required'),
             confirmPassword: Yup.string()
-               .oneOf([Yup.ref('password'), null], 'Passwords must match')
-               .required('Required'),
+                .oneOf([Yup.ref('password'), null], 'Passwords must match')
+                .required('Required'),
             firstName: Yup.string().required('Required'),
             lastName: Yup.string().required('Required'),
             companyName: Yup.string().required('Required'),
+            role: Yup.string().required('Required'),
         }),
-        
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             try {
-                // API Gateway endpoint URL
-                const apiUrl = 'https://n34orowt8e.execute-api.eu-west-2.amazonaws.com/user'; // Adjust if necessary
-
-                const response = await axios.post(apiUrl, values);
-                console.log('Registration successful:', response.data);
-                // Handle success here (e.g., show a success message, redirect, etc.)
-
+                const apiUrl = 'https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/user';
+                await axios.post(apiUrl, values);
                 resetForm();
+                setSubmitting(false);
+                // navigate('/login', { state: { needVerification: true } });
             } catch (error) {
                 console.error('Registration error:', error.response ? error.response.data : error.message);
-                // Handle errors here (e.g., show error messages)
+                setSubmitting(false);
             }
-            setSubmitting(false);
         },
     });
 
@@ -65,7 +63,6 @@ const RegistrationForm = () => {
                                 <div className="invalid-feedback">{formik.errors.companyName}</div>
                             )}
                         </div>
-                        
                         <div className="form-group">
                             <label htmlFor="firstName">First Name</label>
                             <input
@@ -81,7 +78,6 @@ const RegistrationForm = () => {
                                 <div className="invalid-feedback">{formik.errors.firstName}</div>
                             )}
                         </div>
-                        
                         <div className="form-group">
                             <label htmlFor="lastName">Last Name</label>
                             <input
@@ -97,7 +93,6 @@ const RegistrationForm = () => {
                                 <div className="invalid-feedback">{formik.errors.lastName}</div>
                             )}
                         </div>
-                        
                         <div className="form-group">
                             <label htmlFor="email">Email Address</label>
                             <input
@@ -113,7 +108,6 @@ const RegistrationForm = () => {
                                 <div className="invalid-feedback">{formik.errors.email}</div>
                             )}
                         </div>
-                        
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
                             <input
@@ -129,7 +123,6 @@ const RegistrationForm = () => {
                                 <div className="invalid-feedback">{formik.errors.password}</div>
                             )}
                         </div>
-                        
                         <div className="form-group">
                             <label htmlFor="confirmPassword">Confirm Password</label>
                             <input
@@ -145,7 +138,6 @@ const RegistrationForm = () => {
                                 <div className="invalid-feedback">{formik.errors.confirmPassword}</div>
                             )}
                         </div>
-                        
                         <button type="submit" className="btn btn-primary mt-3 w-100">Register</button>
                     </form>
                 </div>

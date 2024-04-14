@@ -1,4 +1,4 @@
-import { 
+import {
     CognitoIdentityProviderClient, 
     InitiateAuthCommand,
     AdminGetUserCommand
@@ -20,18 +20,28 @@ export const handler = async (event) => {
 
         const authResponse = await cognitoClient.send(new InitiateAuthCommand(params));
 
-        // Check for challenges in the response
+        // Check if there is a challenge which might include the user needing to confirm their account
         if (authResponse.ChallengeName) {
-            // If there's a challenge, return it to the client to handle
-            return {
-                statusCode: 200,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    challengeName: authResponse.ChallengeName,
-                    session: authResponse.Session,
-                    // Include other relevant data for handling the challenge
-                }),
-            };
+            if (authResponse.ChallengeName === 'NEW_PASSWORD_REQUIRED') {
+                return {
+                    statusCode: 200,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        challengeName: authResponse.ChallengeName,
+                        session: authResponse.Session,
+                    }),
+                };
+            }
+            // Specific status for UserNotConfirmed
+            if (authResponse.ChallengeName === 'USER_NOT_CONFIRMED') {
+                return {
+                    statusCode: 403, // Or use 401 depending on your design decision
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        challengeName: 'USER_NOT_CONFIRMED',
+                    }),
+                };
+            }
         }
 
         // Fetch user attributes if no challenge is present
@@ -40,13 +50,11 @@ export const handler = async (event) => {
             Username: email,
         }));
 
-        // Extract attributes
         const attributes = userAttributesResponse.UserAttributes.reduce((acc, attr) => {
             acc[attr.Name.replace('custom:', '')] = attr.Value;
             return acc;
         }, {});
 
-        // Respond with user attributes if authentication is successful and no challenge was present
         return {
             statusCode: 200,
             headers: { "Content-Type": "application/json" },
@@ -58,6 +66,14 @@ export const handler = async (event) => {
         };
     } catch (error) {
         console.error("Authentication error:", error);
-        // Handle and respond with errors
+        return {
+            statusCode: error.$metadata.httpStatusCode || 500,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: "Authentication failed",
+                error: error.name,
+                error_description: error.message
+            })
+        };
     }
 };
