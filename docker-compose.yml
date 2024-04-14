@@ -1,0 +1,50 @@
+version: "3.2"
+
+services:
+  terraform:
+    image: hashicorp/terraform:1.4.6
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_SESSION_TOKEN:
+      AWS_DEFAULT_REGION:
+      #AWS_SHARED_CREDENTIALS_FILE: /app/terraform/.aws/credentials
+      SYSTEM_ACCESSTOKEN:
+      #CI:
+      TF_LOG:
+    working_dir: /app
+    volumes:
+      - ./terraform:/app
+      #- ~/.aws:/app/terraform/.aws
+
+  trivy:
+    image: aquasec/trivy:latest
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      SYSTEM_ACCESSTOKEN:
+      AWS_DEFAULT_REGION:
+      CI:
+    volumes:
+      - ./terraform:/app:rw
+
+  tflint:
+    image: ghcr.io/terraform-linters/tflint:latest
+    volumes:
+      - ./terraform:/data:rw
+
+  terraform_docs:
+    image: quay.io/terraform-docs/terraform-docs:0.16.0
+    volumes:
+      - ./terraform:/terraform_docs
+
+  # node:
+  #   image: node:20.5.0
+  #   working_dir: /app
+  #   volumes:
+  #     - ./app/:/app
+  
+  # my-static-website:
+  #   image: my-static-website
+  #   ports:
+  #     - "3000:3000"

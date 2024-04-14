@@ -1,6 +1,6 @@
 resource "aws_dynamodb_table" "company_table" {
-  name           = "nest-forms-company-table"
-  billing_mode   = "PAY_PER_REQUEST"
+  name         = "nest-forms-company-table"
+  billing_mode = "PAY_PER_REQUEST"
   hash_key     = "PK"
   range_key    = "SK"
 

@@ -9,7 +9,7 @@ terraform {
     bucket         = "nest-forms-dev-terraform-state"
     key            = "terraform/terraform.tfstate"
     region         = "eu-west-2"
-    dynamodb_table = "form-nest-terraform-state-lock" 
+    dynamodb_table = "form-nest-terraform-state-lock"
     encrypt        = true
   }
 }

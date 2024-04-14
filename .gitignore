@@ -15,6 +15,7 @@ package-lock.json
 *.tfstate
 *.tfstate.backup
 *.tfvars
+*.plan
 
 # IDE and Editor Folders
 .vscode/
