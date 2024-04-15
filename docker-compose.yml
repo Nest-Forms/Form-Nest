@@ -38,13 +38,18 @@ services:
     volumes:
       - ./terraform:/terraform_docs
 
-  # node:
-  #   image: node:20.5.0
-  #   working_dir: /app
-  #   volumes:
-  #     - ./app/:/app
-  
-  # my-static-website:
-  #   image: my-static-website
-  #   ports:
-  #     - "3000:3000"
+  node:
+    image: node:21.4.0
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+
+  frontend:
+    build:
+      context: .
+      dockerfile: dockerfile
+    working_dir: /app
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app

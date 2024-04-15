@@ -2,6 +2,8 @@ SHELL := /bin/bash
 .ONESHELL:
 .SILENT:
 
+include Makefile-frontend
+
 RED = '\033[1;31m'
 CYAN = '\033[0;36m'
 
@@ -83,7 +85,8 @@ tflint:
 
 .PHONY: terraform_docs
 terraform_docs:
-	echo -e --- $(CYAN)Creating Terraform Docs ...
+	
+	$(CYAN)Creating Terraform Docs ...
 	$(RUN_TF_DOCS) markdown /terraform_docs > README.md
 
 # .PHONY: deploy
