@@ -1,12 +1,11 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const RegistrationForm = () => {
-    const navigate = useNavigate();
+    const { register } = useAuth();
     const formik = useFormik({
         initialValues: {
             email: 'williams.t17@gmail.com',
@@ -20,25 +19,16 @@ const RegistrationForm = () => {
         validationSchema: Yup.object({
             email: Yup.string().email('Invalid email address').required('Required'),
             password: Yup.string().required('Required'),
-            confirmPassword: Yup.string()
-                .oneOf([Yup.ref('password'), null], 'Passwords must match')
-                .required('Required'),
+            confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Required'),
             firstName: Yup.string().required('Required'),
             lastName: Yup.string().required('Required'),
             companyName: Yup.string().required('Required'),
             role: Yup.string().required('Required'),
         }),
-        onSubmit: async (values, { setSubmitting, resetForm }) => {
-            try {
-                const apiUrl = 'https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/user';
-                await axios.post(apiUrl, values);
-                resetForm();
-                setSubmitting(false);
-                // navigate('/login', { state: { needVerification: true } });
-            } catch (error) {
-                console.error('Registration error:', error.response ? error.response.data : error.message);
-                setSubmitting(false);
-            }
+        onSubmit: (values, { setSubmitting, resetForm }) => {
+            register(values);
+            resetForm();
+            setSubmitting(false);
         },
     });
 
