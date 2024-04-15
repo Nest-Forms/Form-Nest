@@ -11,6 +11,10 @@ const NavigationBar = () => {
     logout();
     navigate('/login'); 
   };
+
+  // Using optional chaining and restructuring to avoid undefined errors
+  const role = user?.role;
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -20,7 +24,7 @@ const NavigationBar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
-            {user && user.userAttributes.role === 'admin' && (
+            {role === 'admin' && (
               <li className="nav-item">
                 <Link className="nav-link" to="/admin/create-user">Create User</Link>
               </li>

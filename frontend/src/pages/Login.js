@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -9,13 +9,24 @@ import '../App.css';
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { needVerification } = location.state || {};
-    const { user, authChallenge, isEmailVerificationRequired, login, completeNewPasswordChallenge, submitEmailVerificationCode, setIsEmailVerificationRequired } = useAuth();
+    const {
+        user,
+        isEmailVerificationRequired,
+        login,
+        submitEmailVerificationCode,
+        setIsEmailVerificationRequired,
+    } = useAuth();
 
+    // Handle redirect after login
     useEffect(() => {
-        if (user) navigate('/');
-        if (needVerification) setIsEmailVerificationRequired(true);
-    }, [user, navigate, needVerification, setIsEmailVerificationRequired]);
+        if (user) {
+            navigate('/');
+        }
+        const { needVerification } = location.state || {};
+        if (needVerification) {
+            setIsEmailVerificationRequired(true);
+        }
+    }, [user, navigate, setIsEmailVerificationRequired, location.state]);
 
     return (
         <div className="login-container">
@@ -27,7 +38,7 @@ const Login = () => {
                         password: Yup.string().required('Required'),
                     })}
                     onSubmit={(values, { setSubmitting }) => {
-                        login(values.email, values.password);
+                        login(values);
                         setSubmitting(false);
                     }}
                 >

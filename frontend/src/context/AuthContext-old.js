@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -11,22 +12,20 @@ export const AuthProvider = ({ children }) => {
     const [emailForVerification, setEmailForVerification] = useState('');
 
     const login = async ({ email, password }) => {
+            setEmailForVerification(email);
+            console.log(emailForVerification);
         try {
-            const response = await fetch('https://n34orowt8e.execute-api.eu-west-2.amazonaws.com/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (response.status === 409) {
+            const response = await axios.post('https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/login', { email, password });
+            console.log(response)
+            setEmailForVerification(email);
+            console.log(emailForVerification);
+            if (response.status === 409 || response.status === 403) {
                 setIsEmailVerificationRequired(true);
                 setEmailForVerification(email);
                 return;
             }
 
-            if (!response.ok) throw new Error('Login failed');
-
-            const data = await response.json();
+            const data = response.data;
             if (data.challengeName === 'NEW_PASSWORD_REQUIRED') {
                 setAuthChallenge({ session: data.session, challengeName: 'NEW_PASSWORD_REQUIRED' });
             } else {
@@ -38,41 +37,65 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const submitEmailVerificationCode = async ( code ) => {
+    const completeNewPasswordChallenge = async (newPassword) => {
         try {
-            const response = await fetch('https://n34orowt8e.execute-api.eu-west-2.amazonaws.com/verify-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: emailForVerification, code }),
+            const response = await axios.post('https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/force-pw-change', {
+                username: emailForVerification,
+                newPassword: newPassword,
+                session: authChallenge.session,
             });
-            if (!response.ok) throw new Error('Email verification failed');
+            console.log("Password updated successfully:", response.data);
+            setAuthChallenge(null);
+        } catch (error) {
+            console.error("Error updating password:", error);
+        }
+    };
+
+    const submitEmailVerificationCode = async (code) => {
+        try {
+            await axios.post('https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/verify-email', { email: emailForVerification, code });
 
             setIsEmailVerificationRequired(false);
-            // might want to log the user in automatically here or instruct them to log in again.
         } catch (error) {
             console.error("Email verification error:", error);
         }
     };
+
     const requestNewVerificationCode = async () => {
-        const response = await fetch('https://n34orowt8e.execute-api.eu-west-2.amazonaws.com/resend-verification', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: emailForVerification }),
-        });
-    
-        if (!response.ok) {
-            throw new Error('Failed to resend verification code.');
+        try {
+            await axios.post('https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/resend-verification', { email: emailForVerification });
+        } catch (error) {
+            console.error("Failed to resend verification code:", error);
         }
-    
-        // Handle response...
     };
-    
 
     const logout = () => {
         localStorage.removeItem('user');
         setUser(null);
         setAuthChallenge(null);
         setIsEmailVerificationRequired(false);
+    };
+
+    const initiatePasswordReset = async (email) => {
+        try {
+            await axios.post('https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/initiate-pw-reset', { email });
+        } catch (error) {
+            console.error("Error initiating password reset:", error);
+        }
+    };
+    
+    const confirmPasswordReset = async (email, code, newPassword) => {
+        try {
+            console.log(email, code, newPassword)
+            await axios.post('https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/confirm-pw-reset', {
+                email,
+                code,
+                newPassword,
+            });
+            return Promise.resolve();
+        } catch (error) {
+            console.error("Error confirming password reset:", error);
+        }
     };
 
     useEffect(() => {
@@ -90,8 +113,11 @@ export const AuthProvider = ({ children }) => {
             isEmailVerificationRequired,
             emailForVerification,
             login,
+            completeNewPasswordChallenge,
             submitEmailVerificationCode,
             requestNewVerificationCode,
+            initiatePasswordReset,
+            confirmPasswordReset,
             logout,
         }}>
             {children}
