@@ -86,8 +86,7 @@ tflint:
 
 .PHONY: terraform_docs
 terraform_docs:
-	
-	$(CYAN)Creating Terraform Docs ...
+	echo -e --- $(CYAN)Creating Terraform Docs ...
 	$(RUN_TF_DOCS) markdown /terraform_docs > README.md
 
 # .PHONY: deploy
