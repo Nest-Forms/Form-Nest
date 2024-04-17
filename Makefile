@@ -9,7 +9,7 @@ RED = '\033[1;31m'
 CYAN = '\033[0;36m'
 
 export AWS_DEFAULT_REGION ?= us-east-2
-CONFIG ?= dev
+#CONFIG ?= dev
 
 TF_PLAN            = config/$(CONFIG).plan
 TF_PLAN_JSON       = $(TF_PLAN).json

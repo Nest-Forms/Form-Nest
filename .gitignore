@@ -14,7 +14,6 @@ package-lock.json
 .terraform
 *.tfstate
 *.tfstate.backup
-*.tfvars
 *.plan
 
 # IDE and Editor Folders

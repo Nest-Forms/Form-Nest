@@ -34,3 +34,5 @@ jobs:
           export AWS_SECRET_ACCESS_KEY=$(jq -r .Credentials.SecretAccessKey assumed-role.json)
           export AWS_SESSION_TOKEN=$(jq -r .Credentials.SessionToken assumed-role.json)
           .github/workflows/scripts/plan.sh
+        env:
+          CONFIG: dev
