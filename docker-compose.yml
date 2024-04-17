@@ -9,7 +9,7 @@ services:
       AWS_SESSION_TOKEN:
       AWS_DEFAULT_REGION:
       #AWS_SHARED_CREDENTIALS_FILE: /app/terraform/.aws/credentials
-      SYSTEM_ACCESSTOKEN:
+      #SYSTEM_ACCESSTOKEN:
       #CI:
       TF_LOG:
     working_dir: /app

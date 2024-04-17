@@ -2,4 +2,4 @@
 set -euox pipefail
 
 # Run plan
-make plan_json
+make plan
