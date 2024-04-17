@@ -45,11 +45,21 @@ services:
       - ./frontend:/app
 
   frontend:
-    build:
-      context: .
-      dockerfile: dockerfile
+    image: frontend:latest
     working_dir: /app
     ports:
       - 3000:3000
     volumes:
       - ./frontend:/app
+
+
+  # node-lambda-tests:
+  #   image: node:21.4.0
+  #   working_dir: /app
+  #   volumes:
+  #     - ./terraform/lambdas:/app
+      # lambda-tests:
+  #   image: lambda-tests:latest
+  #   # # working_dir: /app
+  #   # volumes:
+  #   #   - ./terraform/lambdas/user-login:/lambdas/user-login

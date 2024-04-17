@@ -1,32 +1,36 @@
 
 
-RUN_NODE 	  = docker-compose run --rm node
-RUN_NODE_BASH = docker-compose run --rm -it --volume ./app:/app --entrypoint bash node
-RUN_FRONTEND  = docker-compose up frontend -d
+RUN_NODE 	     = docker-compose run --rm node
+RUN_NODE_BASH    = docker-compose run --rm -it --volume ./app:/app --entrypoint bash node
+RUN_FRONTEND     = docker-compose up frontend
+
+.PHONY: build_and_run_forms
+build_and_run_forms: docker_build run_forms
+
+.PHONY: build_and_install
+build_and_install: npm_install npm_build
 
 # run this to fire up Nest Forms locally for testing
 .PHONY: run_forms
-run_forms: docker_build
+run_forms:
 	$(RUN_FRONTEND)
 
+# This builds the docker image for running the frontend in the UI (it allows you to expose port 3000 which cant be done using the node image)
 .PHONY: docker_build
 docker_build:
 	docker build --no-cache -t frontend .
 
+# This has to be run second to build (create build folder)
+.PHONY: npm_build
+npm_build:
+	echo -e --- $(CYAN)Running npm build ...
+	$(RUN_NODE) npm run build
+
+# This has to be run first to install dependencies (create node_modules folder)
 .PHONY: npm_install
 npm_install:
 	echo -e --- $(CYAN)Running npm install ...
 	$(RUN_NODE) npm install
-
-.PHONY: npm_build
-npm_build: npm_install
-	echo -e --- $(CYAN)Running npm build ...
-	$(RUN_NODE) npm run build
-
-.PHONY: npm_start
-npm_start:
-	echo -e --- $(CYAN)Running npm build ...
-	$(RUN_NODE) npm start
 
 .PHONY: npm_bash
 npm_bash: 
@@ -37,6 +41,3 @@ npm_bash:
 npm_clean:
 	echo -e --- $(CYAN)Running npm clean ...
 	$(RUN_NODE) sh -c 'rm -rf node_modules; rm -rf build'
-
-# `npm run eject`
-### `npm test`
