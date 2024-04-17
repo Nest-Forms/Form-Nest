@@ -1,0 +1,15 @@
+{
+    "name": "nest-forms-initiate-password-reset",
+    "version": "1.0.0",
+    "description": "Initiate Password Reset",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "author": "Tom Williams",
+    "license": "ISC",
+    "dependencies": {
+    }
+  }
+  

@@ -6,7 +6,7 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-const API_URL = 'https://mwaa7c2t5m.execute-api.eu-west-2.amazonaws.com/';
+const API_URL = 'https://peclyg9775.execute-api.eu-west-2.amazonaws.com/';
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
@@ -127,6 +127,7 @@ export const AuthProvider = ({ children }) => {
             user,
             authChallenge,
             isEmailVerificationRequired,
+            setIsEmailVerificationRequired,
             emailForVerification,
             login,
             register,
