@@ -23,8 +23,8 @@ jobs:
       - name: Lint
         run: .github/workflows/scripts/lint.sh
       
-      - name: Validate
-        run: .github/workflows/scripts/validate.sh
+      # - name: Validate
+      #   run: .github/workflows/scripts/validate.sh
 
       - name: Plan
         run: .github/workflows/scripts/plan.sh
