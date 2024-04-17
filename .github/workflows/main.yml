@@ -3,7 +3,7 @@ name: Terraform
 on:
   push:
     branches:
-      - 'cwilson/local-development-make'
+      - '**'
 
 jobs:
   terraform:
@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Lint
-        run: workflows/scripts/lint.sh
+        run: .github/workflows/scripts/lint.sh
