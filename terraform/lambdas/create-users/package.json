@@ -1,4 +1,14 @@
 {
+  "name": "nest-forms-create-users",
+  "version": "1.0.0",
+  "description": "Create users function",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Tom Williams",
+  "license": "ISC",
   "dependencies": {
     "@aws-sdk/lib-dynamodb": "^3.540.0"
   }

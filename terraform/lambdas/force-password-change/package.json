@@ -1,0 +1,15 @@
+{
+    "name": "nest-forms-force-change-password",
+    "version": "1.0.0",
+    "description": "Force Password Change",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "author": "Tom Williams",
+    "license": "ISC",
+    "dependencies": {
+    }
+  }
+  

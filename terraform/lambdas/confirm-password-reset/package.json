@@ -1,0 +1,15 @@
+{
+    "name": "nest-forms-confirm-password",
+    "version": "1.0.0",
+    "description": "Confirm Password Function",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "author": "Tom Williams",
+    "license": "ISC",
+    "dependencies": {
+    }
+  }
+  
