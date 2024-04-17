@@ -3,7 +3,7 @@ name: Terraform
 on:
   push:
     branches:
-      - '*'
+      - 'cwilson/local-development-make'
 
 jobs:
   terraform:
