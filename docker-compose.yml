@@ -53,11 +53,13 @@ services:
       - ./frontend:/app
 
 
-  # node-lambda-tests:
+  # node-tests:
   #   image: node:21.4.0
   #   working_dir: /app
   #   volumes:
-  #     - ./terraform/lambdas:/app
+  #     - ./terraform/lambdas/user-login:/app
+  #     - ./terraform/lambdas/node_modules:/app/node_modules
+
       # lambda-tests:
   #   image: lambda-tests:latest
   #   # # working_dir: /app

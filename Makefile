@@ -3,7 +3,7 @@ SHELL := /bin/bash
 .SILENT:
 
 include Makefile-frontend
-#include Makefile-lambda
+#include Makefile-tests
 
 RED = '\033[1;31m'
 CYAN = '\033[0;36m'
