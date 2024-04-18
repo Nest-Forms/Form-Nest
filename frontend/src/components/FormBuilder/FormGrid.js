@@ -1,30 +1,39 @@
-import React from 'react';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { Field } from 'formik';
+import React, { useState } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import FieldRenderer from './FieldRenderer';
+import './FormBuilder.css'; // Make sure the path is correct
 
-const FormGrid = ({ formItems, componentMap }) => {
+const FormGrid = () => {
+  const [components, setComponents] = useState([]);
+
+  const onDragEnd = (result) => {
+    const { source, destination } = result;
+    if (!destination) {
+      return;
+    }
+    const items = Array.from(components);
+    const [reorderedItem] = items.splice(source.index, 1);
+    items.splice(destination.index, 0, reorderedItem);
+    setComponents(items);
+  };
+
   return (
-    <Droppable droppableId="formGrid">
-      {(provided) => (
-        <div ref={provided.innerRef} {...provided.droppableProps} className="form-grid">
-          {formItems.map((item, index) => (
-            <Draggable key={item.id} draggableId={item.id} index={index}>
-              {(provided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  className="grid-item"
-                >
-                  <Field component={componentMap[item.type]} name={item.id} />
-                </div>
-              )}
-            </Draggable>
-          ))}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="form-grid">
+        {(provided) => (
+          <div 
+            ref={provided.innerRef} 
+            {...provided.droppableProps}
+            className="form-grid" // This applies the CSS styling
+          >
+            {components.map((item, index) => (
+              <FieldRenderer key={item.id} field={item} index={index} />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 

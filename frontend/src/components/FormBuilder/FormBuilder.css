@@ -1,38 +1,26 @@
-.form-builder-container {
+.form-builder {
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 20px; /* Adds space between palette and grid */
 }
 
-.palette-section {
-  width: 200px;
+.palette {
+  width: 250px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.draggable-item {
-  margin-bottom: 10px;
-  cursor: pointer;
-  padding: 10px;
+  border: 2px solid #007BFF;
+  border-radius: 8px;
   background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .form-grid {
   flex-grow: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  min-height: 600px; /* Adjust based on your needs */
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Adjust based on your needs */
-  gap: 10px;
-}
-
-.grid-item {
+  border: 2px solid #28A745;
   padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  min-height: 400px;
+  border-radius: 8px;
+  background-color: #ffffff;
 }

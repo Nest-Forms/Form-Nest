@@ -25,9 +25,14 @@ const NavigationBar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             {role === 'admin' && (
+              <>
               <li className="nav-item">
                 <Link className="nav-link" to="/admin/create-user">Create User</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/admin/create-form">Create Form</Link>
+              </li>
+            </>
             )}
           </ul>
           <ul className="navbar-nav ms-auto">
