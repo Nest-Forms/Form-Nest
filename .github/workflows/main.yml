@@ -57,7 +57,7 @@ jobs:
   
   terraform-apply-dev:
     needs: terraform-plan-dev
-    if: github.ref == 'refs/heads/main'
+    #if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     #environment: dev
     env:
@@ -89,9 +89,7 @@ jobs:
           export AWS_ACCESS_KEY_ID=$(jq -r .Credentials.AccessKeyId assumed-role.json)
           export AWS_SECRET_ACCESS_KEY=$(jq -r .Credentials.SecretAccessKey assumed-role.json)
           export AWS_SESSION_TOKEN=$(jq -r .Credentials.SessionToken assumed-role.json)
-          ls terraform/config
-          echo "todo: apply"
-          # .github/workflows/scripts/apply.sh
+          .github/workflows/scripts/apply.sh
         env:
           CONFIG: dev
   
