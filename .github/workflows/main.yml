@@ -43,7 +43,6 @@ jobs:
           export AWS_SECRET_ACCESS_KEY=$(jq -r .Credentials.SecretAccessKey assumed-role.json)
           export AWS_SESSION_TOKEN=$(jq -r .Credentials.SessionToken assumed-role.json)
           .github/workflows/scripts/plan.sh
-          ls -la
         env:
           CONFIG: dev
       
@@ -51,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dev.plan
-          path: config/dev.plan
+          path: terraform/config/dev.plan
   
   terraform-apply-dev:
     needs: terraform-plan-dev
