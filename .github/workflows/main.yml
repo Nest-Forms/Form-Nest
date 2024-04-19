@@ -21,8 +21,6 @@ jobs:
 
   terraform-plan-dev:
     runs-on: ubuntu-latest
-    env:
-      config: dev
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -46,7 +44,7 @@ jobs:
           export AWS_SESSION_TOKEN=$(jq -r .Credentials.SessionToken assumed-role.json)
           .github/workflows/scripts/plan.sh
         env:
-          CONFIG: $config
+          CONFIG: dev
       
       - name: upload-dev-plan
         uses: actions/upload-artifact@v4
@@ -91,5 +89,5 @@ jobs:
           echo "todo: apply"
           # .github/workflows/scripts/apply.sh
         env:
-          CONFIG: $config
+          CONFIG: dev
   
