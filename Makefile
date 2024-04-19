@@ -17,7 +17,7 @@ TF_PLAN_JSON       = $(TF_PLAN).json
 TF_VARS := -var-file=config/$(CONFIG).tfvars
 
 RUN_TF             = @docker-compose run --rm terraform
-RUN_TF_BASH        = @docker-compose run --rm --entrypoint bash terraform
+RUN_TF_BASH        = @docker-compose run --rm --entrypoint sh terraform
 RUN_TF_LINT		   = @docker-compose run --rm --entrypoint=/bin/sh tflint -c "tflint --init && tflint --no-module" tflint 
 RUN_TF_DOCS        = @docker-compose run --rm terraform_docs
 RUN_AWS_CLI		   = @docker-compose run --rm entrypoint aws terraform
