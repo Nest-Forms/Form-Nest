@@ -48,11 +48,11 @@ jobs:
         env:
           CONFIG: $config
       
-      - name: upload-$config-plan
+      - name: upload-dev-plan
         uses: actions/upload-artifact@v4
         with:
-          name: $config.plan
-          path: config/$config.plan
+          name: dev.plan
+          path: config/dev.plan
   
   terraform-apply-dev:
     needs: terraform-plan-dev
@@ -77,7 +77,7 @@ jobs:
       - name: download-dev-plan
         uses: actions/download-artifact@v4
         with:
-          name: $config.plan
+          name: dev.plan
           path: terraform/config
       
       - name: Apply
