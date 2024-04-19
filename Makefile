@@ -48,7 +48,7 @@ plan_json:
 	$(RUN_TF_BASH) -c "terraform show -json $(TF_PLAN) | jq '.' > $(TF_PLAN_JSON)"
 
 .PHONY: apply
-apply:
+apply: init
 	echo -e --- $(CYAN)Deploying Terraform ...
 	$(RUN_TF) apply $(TF_PLAN)
 
