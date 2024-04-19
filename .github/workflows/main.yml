@@ -55,7 +55,7 @@ jobs:
           path: config/$config.plan
   
   terraform-apply-dev:
-    needs: terraform-plan-$(config)
+    needs: terraform-plan-${{ vars.JOB_NAME }}
     runs-on: ubuntu-latest
     #environment: dev
     env:
