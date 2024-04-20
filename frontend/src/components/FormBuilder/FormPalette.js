@@ -1,43 +1,34 @@
+// FormPalette.js
 import React from 'react';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
-import './FormBuilder.css';
+import { Draggable } from 'react-beautiful-dnd';
+
+const paletteFields = [
+  { id: 'text', type: 'text', label: 'Text Input' },
+  { id: 'number', type: 'number', label: 'Number Input' },
+  { id: 'checkbox', type: 'checkbox', label: 'Checkbox Input' },
+  { id: 'radio', type: 'radio', label: 'Radio Input' },
+  // Add more field types as needed
+];
 
 const FormPalette = () => {
-  const items = [
-    { id: 'text', content: 'Text Input' },
-    { id: 'number', content: 'Number Input' },
-    { id: 'checkbox', content: 'Checkbox' },
-    { id: 'radio', content: 'Radio Button' },
-    { id: 'select', content: 'Select Input' }
-  ];
-
   return (
-    <Droppable droppableId="palette" isDropDisabled={true}>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-          className="palette"
-        >
-          {items.map((item, index) => (
-            <Draggable key={item.id} draggableId={item.id} index={index}>
-              {(provided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  className="draggable-item"
-                >
-                  {item.content}
-                </div>
-              )}
-            </Draggable>
-          ))}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+    <div>
+      {paletteFields.map((field, index) => (
+        <Draggable key={field.id} draggableId={field.id} index={index}>
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              {field.label}
+            </div>
+          )}
+        </Draggable>
+      ))}
+    </div>
   );
 };
 
+export { paletteFields };
 export default FormPalette;
