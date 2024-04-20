@@ -1,4 +1,3 @@
-// FormPalette.jsx
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import './FormBuilder.css';

@@ -1,19 +1,23 @@
 import React from 'react';
-import { TextInput, NumberInput, CheckboxInput, RadioButton, SelectInput } from  '../FormInputs';
+import {TextInput} from '../FormInputs/';
+// import other form field components here
+import 'bootstrap/dist/css/bootstrap.css';
 
-const fieldComponents = {
-  TextInput,
-  NumberInput,
-  CheckboxInput,
-  RadioButton,
-  SelectInput
-};
+const FieldRenderer = ({ field, formik, setSelectedField }) => {
+  const handleSelect = () => {
+    setSelectedField(field);
+  };
 
-const FieldRenderer = ({ field }) => {
-  const Component = fieldComponents[field.type];
-  if (!Component) return null;
-
-  return <Component {...field.props} name={field.name} label={field.label} />;
+  switch (field.type) {
+    case 'text':
+      return (
+        <div onClick={handleSelect}>
+          <TextInput {...formik.getFieldProps(field.id)} />
+        </div>
+      );
+    default:
+      return null;
+  }
 };
 
 export default FieldRenderer;
