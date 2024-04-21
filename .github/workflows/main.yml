@@ -59,7 +59,7 @@ jobs:
     needs: terraform-plan-dev
     #if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    #environment: dev
+    environment: dev
     env:
       config: dev
     concurrency:
