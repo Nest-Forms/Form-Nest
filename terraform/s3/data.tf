@@ -8,7 +8,7 @@ data "aws_iam_policy_document" "bucket_policy_document" {
     effect = "Deny"
     actions = [
       "s3:*"
-    ]
+                ]
     resources = [
       "arn:aws:s3:::${aws_s3_bucket.bucket.id}",
       "arn:aws:s3:::${aws_s3_bucket.bucket.id}/*",
