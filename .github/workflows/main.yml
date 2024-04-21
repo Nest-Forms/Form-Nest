@@ -19,7 +19,7 @@ jobs:
   #       run: .github/workflows/scripts/validate.sh
       
   #     - name: Comply
-  #       run: .github/workflows/scripts/comply.sh 
+  #       run: .github/workflows/scripts/comply.sh
 
   terraform-plan-dev:
     runs-on: ubuntu-latest
