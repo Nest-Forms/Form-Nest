@@ -83,7 +83,7 @@ jobs:
       - name: Apply
         run: |
           . .github/workflows/scripts/assume-role.sh "arn:aws:iam::767397886223:role/DeploymentRole"
-          . .github/workflows/scripts/apply.sh
+          # . .github/workflows/scripts/apply.sh
         env:
           CONFIG: dev
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
