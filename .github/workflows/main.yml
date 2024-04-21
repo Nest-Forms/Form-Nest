@@ -52,7 +52,7 @@ jobs:
 
   terraform-apply-dev:
     needs: terraform-plan-dev
-    #if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: dev
     env:
@@ -73,7 +73,7 @@ jobs:
       - name: Apply
         run: |
           . .github/workflows/scripts/assume-role.sh "arn:aws:iam::767397886223:role/DeploymentRole"
-          # . .github/workflows/scripts/apply.sh
+          . .github/workflows/scripts/apply.sh
         env:
           CONFIG: dev
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -102,7 +102,7 @@ jobs:
   upload-frontend-to-s3:
     runs-on: ubuntu-latest
     needs: [ terraform-apply-dev, frontend-build ]
-    #if: github.ref == 'refs/heads/main'  
+    if: github.ref == 'refs/heads/main'  
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -116,8 +116,7 @@ jobs:
       - name: Upload site to S3
         run: |
           . .github/workflows/scripts/assume-role.sh "arn:aws:iam::767397886223:role/DeploymentRole"
-          ls frontend/build
-          # . .github/workflows/scripts/upload.sh
+          . .github/workflows/scripts/upload.sh
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
