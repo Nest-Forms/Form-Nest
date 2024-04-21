@@ -67,21 +67,21 @@ data "aws_iam_policy_document" "bucket_policy_document" {
     }
   }
 
-# Cloudfront config; need a cloudfront distro first
-#   statement {
-#     sid       = "AllowCloudFrontServicePrincipalReadOnly"
-#     effect    = "Allow"
-#     actions   = ["s3:GetObject"]
-#     resources = ["${aws_s3_bucket.bucket.arn}/*"]
+  # Cloudfront config; need a cloudfront distro first
+  #   statement {
+  #     sid       = "AllowCloudFrontServicePrincipalReadOnly"
+  #     effect    = "Allow"
+  #     actions   = ["s3:GetObject"]
+  #     resources = ["${aws_s3_bucket.bucket.arn}/*"]
 
-#     principals {
-#       type        = "Service"
-#       identifiers = ["cloudfront.amazonaws.com"]
-#     }
+  #     principals {
+  #       type        = "Service"
+  #       identifiers = ["cloudfront.amazonaws.com"]
+  #     }
 
-#     condition {
-#       test     = "StringEquals"
-#       variable = "AWS:SourceArn"
-#       values   = [var.cloudfront_s3_distribution]
-#     }
+  #     condition {
+  #       test     = "StringEquals"
+  #       variable = "AWS:SourceArn"
+  #       values   = [var.cloudfront_s3_distribution]
+  #     }
 }

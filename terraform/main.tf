@@ -28,7 +28,7 @@ terraform {
 }
 
 module "s3" {
-  source              = "./s3"
-  environment         = var.environment
-  enable_versionining = var.enable_versionining
+  source            = "./s3"
+  environment       = var.environment
+  enable_versioning = var.enable_versioning
 }
