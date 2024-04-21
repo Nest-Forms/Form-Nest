@@ -20,6 +20,9 @@ jobs:
       
       - name: Comply
         run: .github/workflows/scripts/comply.sh
+      
+      - name: ShowEvent
+        run: echo ${{ github.event.head_commit.message }}
 
   terraform-plan-dev:
     runs-on: ubuntu-latest
