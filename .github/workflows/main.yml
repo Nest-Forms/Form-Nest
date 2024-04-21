@@ -86,22 +86,22 @@ jobs:
   
   node-build:
     runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v2
-        
-        - name: NPM Install
-          run: make npm_install
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: NPM Install
+        run: make npm_install
 
-        - name: NPM Build
-          run: make npm_build
+      - name: NPM Build
+        run: make npm_build
 
-        - name: Upload site to S3
-          needs: terraform-apply-dev
-          #if: github.ref == 'refs/heads/main'
-          run: |
-            .github/workflows/scripts/assume-role.sh "arn:aws:iam::767397886223:role/DeploymentRole"
-            .github/workflows/scripts/upload.sh
-          env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_SECRET_ACCESS_KEY }}
+      - name: Upload site to S3
+        needs: terraform-apply-dev
+        #if: github.ref == 'refs/heads/main'
+        run: |
+          .github/workflows/scripts/assume-role.sh "arn:aws:iam::767397886223:role/DeploymentRole"
+          .github/workflows/scripts/upload.sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_SECRET_ACCESS_KEY }}
