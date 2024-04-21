@@ -21,19 +21,6 @@ jobs:
   #     - name: Comply
   #       run: .github/workflows/scripts/comply.sh 
 
-  store-dev-aws-creds:
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
-    steps:
-      - name: Store AWS Creds
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-
   terraform-plan-dev:
     runs-on: ubuntu-latest
     concurrency:
@@ -43,16 +30,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # - name: Store AWS Creds
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: eu-west-2
+      - name: Store AWS Creds
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Assume Deployment Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-2
+          role-to-assume: DeploymentRole
 
       - name: Plan
         run: |
-          . .github/workflows/scripts/assume-role.sh "arn:aws:iam::767397886223:role/DeploymentRole"
+          # . .github/workflows/scripts/assume-role.sh "arn:aws:iam::767397886223:role/DeploymentRole"
           . .github/workflows/scripts/plan.sh
         env:
           CONFIG: dev
