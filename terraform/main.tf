@@ -26,3 +26,9 @@ terraform {
     encrypt        = true
   }
 }
+
+module "s3" {
+  source              = "./s3"
+  environment         = var.environment
+  enable_versionining = var.enable_versionining
+}
