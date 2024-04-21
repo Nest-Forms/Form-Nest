@@ -9,7 +9,7 @@ variable "environment" {
   type        = string
 }
 
-variable "enable_versionining" {
+variable "enable_versioning" {
   description = "enable or disable versioninig"
   type        = string
 }
