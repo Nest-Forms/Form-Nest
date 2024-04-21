@@ -41,7 +41,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "server_side_encry
   }
 }
 
-resource "aws_s3_bucket_website" "forms_nest" {
+resource "aws_s3_bucket_website_configuration" "forms_nest" {
   bucket = aws_s3_bucket.bucket.id
   index_document {
     suffix = "index.html"
