@@ -110,7 +110,8 @@ jobs:
 
   upload-to-s3:
     runs-on: ubuntu-latest
-    needs: terraform-apply-dev, node-build
+    needs: terraform-apply-dev
+    needs: node-build
     #if: github.ref == 'refs/heads/main'  
     steps:
       - name: Checkout repository
