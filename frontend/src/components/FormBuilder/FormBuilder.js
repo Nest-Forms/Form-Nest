@@ -16,6 +16,15 @@ const FormBuilder = () => {
   const [selectedField, setSelectedField] = useState(null);
   const [layout, setLayout] = useState([]);
   const [formState, setFormState] = useState([]);
+  const [fields, setFields] = useState([]);
+
+  const updateFieldConfig = (id, newConfig) => {
+    setFields(prevFields =>
+      prevFields.map(field =>
+        field.id === id ? { ...field, config: { ...field.config, ...newConfig } } : field
+      )
+    );
+  };
 
   const initialValues = formState.reduce((values, field) => {
     values[field.id] = '';
@@ -28,6 +37,22 @@ const FormBuilder = () => {
       console.log(values); 
     },
   });
+
+  function addToFormState(field) {
+    const newFieldId = uuidv4();
+    setFormState(prevFormState => {
+      const newFormState = Array.from(prevFormState);
+      const newField = { ...field, id: newFieldId };
+      newFormState.push(newField);
+      return newFormState;
+    });
+  
+    setLayout(prevLayout => {
+      const newLayout = Array.from(prevLayout);
+      newLayout.push({i: newFieldId, x: 0, y: Infinity, w: 1, h: 1});
+      return newLayout;
+    });
+  }
 
   const handleDragEnd = (result) => {
     const { source, destination } = result;
@@ -79,7 +104,8 @@ const FormBuilder = () => {
           <div className="row">
             <div className="col-4">
               {selectedField ? (
-                <FieldConfigurator field={selectedField} setSelectedField={setSelectedField} />
+                <FieldConfigurator field={selectedField} setSelectedField={setSelectedField}
+                updateFieldConfig={updateFieldConfig}/>
               ) : (
                 <Droppable droppableId="palette">
                   {(provided) => (
@@ -87,7 +113,7 @@ const FormBuilder = () => {
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >
-                      <FormPalette />
+                      <FormPalette addToFormState={addToFormState} />
                       {provided.placeholder}
                     </div>
                   )}

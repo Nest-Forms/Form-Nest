@@ -7,3 +7,8 @@ export const TextInput = ({ name, label, ...props }) => (
   </div>
 );
 
+TextInput.configFields = [
+  { name: 'placeholder', label: 'Placeholder', type: 'text' },
+  // add other configurable properties here...
+];
+

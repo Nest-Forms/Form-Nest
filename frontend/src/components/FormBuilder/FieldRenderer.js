@@ -1,30 +1,31 @@
 import React from 'react';
 import { useField } from 'formik';
+import { TextInput, NumberInput, CheckboxInput, SelectInput, RadioButton } from '../FormInputs';
 
 const FieldRenderer = ({ field, setSelectedField }) => {
   const [fieldProps, meta] = useField(field.id);
 
-  const handleSelectField = () => {
+  const handleMouseUp = () => {
     setSelectedField(field);
+  };
+
+  const commonProps = {
+    ...fieldProps,
+    onMouseUp: handleMouseUp,
+    label: field.label,
   };
 
   switch (field.type) {
     case 'text':
-      return (
-        <input type="text" {...fieldProps} onClick={handleSelectField} />
-      );
+      return <TextInput {...commonProps} readOnly />;
     case 'number':
-      return (
-        <input type="number" {...fieldProps} onClick={handleSelectField} />
-      );
+      return <NumberInput {...commonProps} readOnly/>;
     case 'checkbox':
-      return (
-        <input type="checkbox" {...fieldProps} onClick={handleSelectField} />
-      );
+      return <CheckboxInput {...commonProps} readOnly/>;
     case 'radio':
-      return (
-        <input type="radio" {...fieldProps} onClick={handleSelectField} />
-      );
+      return <RadioButton {...commonProps} readOnly/>;
+    case 'select':
+      return <SelectInput {...commonProps} readOnly/>;
     default:
       return null;
   }

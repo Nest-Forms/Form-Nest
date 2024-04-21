@@ -10,7 +10,7 @@ const paletteFields = [
   // Add more field types as needed
 ];
 
-const FormPalette = () => {
+const FormPalette = ({ addToFormState }) => {
   return (
     <div>
       {paletteFields.map((field, index) => (
@@ -22,6 +22,10 @@ const FormPalette = () => {
               {...provided.dragHandleProps}
             >
               {field.label}
+              <button type="button" onClick={(e) => {
+                e.stopPropagation(); // Prevents the drag event
+                addToFormState(field);
+              }}>+</button>
             </div>
           )}
         </Draggable>
