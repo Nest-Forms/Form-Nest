@@ -23,7 +23,7 @@ jobs:
 
   terraform-plan-dev:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.event.commits | map: contains('terraform/') | any }}
+    if: ${{ github.event_name == 'push' && contains(github.event.commits[*].message, 'terraform/') }}
     needs: terraform-checks
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -81,7 +81,7 @@ jobs:
   frontend-build:
     runs-on: ubuntu-latest
     needs: terraform-checks
-    if: ${{ github.event_name == 'push' && github.event.commits | map: contains('frontend/') | any }}
+    if: ${{ github.event_name == 'push' && contains(github.event.commits[*].message, 'frontend/') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
