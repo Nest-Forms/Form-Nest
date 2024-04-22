@@ -28,6 +28,6 @@ git log
 # done < files.txt
 
 # echo folderToIgnore $folderToIgnore
-run_job=true
+run_job=false
 echo run_job $run_job
 export run_job
