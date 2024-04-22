@@ -99,9 +99,8 @@ jobs:
   # Doesnt do anything yet other than echo the CONFIG var
   upload-frontend-to-s3:
     runs-on: ubuntu-latest
-    # needs: [ terraform-apply-dev, frontend-build ]
-    needs: [ frontend-build ]
-    # if: github.ref == 'refs/heads/main'
+    needs: [ terraform-apply-dev, frontend-build ]
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
