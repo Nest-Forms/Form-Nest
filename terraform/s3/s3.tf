@@ -1,5 +1,5 @@
 locals {
-  bucketName = "forms-nest-${var.environment}"
+  bucketName = "${var.environment}.forms-nest.co.uk"
 }
 
 resource "aws_s3_bucket" "bucket" {
@@ -47,3 +47,5 @@ resource "aws_s3_bucket_website_configuration" "forms_nest" {
     suffix = "index.html"
   }
 }
+
+### Lifecycle policy NEEDED!! Keep latest + 1 historical

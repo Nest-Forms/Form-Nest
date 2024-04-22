@@ -1,5 +1,3 @@
-version: "3.2"
-
 services:
   terraform:
     image: hashicorp/terraform:1.4.6
@@ -43,6 +41,10 @@ services:
     working_dir: /app
     volumes:
       - ./frontend:/app
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      SYSTEM_ACCESSTOKEN:
 
   frontend:
     image: frontend:latest
@@ -51,7 +53,10 @@ services:
       - 3000:3000
     volumes:
       - ./frontend:/app
-
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      SYSTEM_ACCESSTOKEN:
 
   # node-tests:
   #   image: node:21.4.0

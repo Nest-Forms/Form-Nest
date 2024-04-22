@@ -11,8 +11,8 @@ build_and_run_forms: docker_build run_forms
 build_and_install: npm_install npm_build
 
 # run this to fire up Nest Forms locally for testing
-.PHONY: run_forms
-run_forms:
+.PHONY: run_nest
+run_nest:
 	$(RUN_FRONTEND)
 
 # This builds the docker image for running the frontend in the UI (it allows you to expose port 3000 which cant be done using the node image)
@@ -36,6 +36,11 @@ npm_install:
 npm_bash: 
 	echo -e --- $(CYAN)Running npm in bash ...
 	$(RUN_NODE_BASH)
+
+.PHONY: npm_cache_clean
+npm_cache_clean:
+	echo -e --- $(CYAN)Running npm cache clean ...
+	$(RUN_NODE) npm cache clean --force
 
 .PHONY: npm_clean
 npm_clean:

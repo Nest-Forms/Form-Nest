@@ -1,4 +1,5 @@
 #!/bin/bash
 set -euox pipefail
 
-aws s3 sync ./build s3://forms-nest-dev
+echo CONFIG $CONFIG
+# aws s3 sync ./build s3://$CONFIG.forms-nest.co.uk --sse AES256
