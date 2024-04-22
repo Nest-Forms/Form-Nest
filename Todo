@@ -1,7 +1,0 @@
-* Add makefile, dockerfile and docker-compose yml - done
-* Get AWS Creds from Tom or temporary creds from SSO - done
-* Add ssh key to Toms github - done
-* Create targets for building the application
-* Create targets for testing the application (Cypress)
-* Create targets for terraform - done
-* Add git workflow yaml - in progress
