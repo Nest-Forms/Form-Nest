@@ -1,0 +1,80 @@
+services:
+  terraform:
+    image: hashicorp/terraform:1.4.6
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_SESSION_TOKEN:
+      AWS_DEFAULT_REGION:
+      #AWS_SHARED_CREDENTIALS_FILE: /app/terraform/.aws/credentials
+      TF_LOG:
+    working_dir: /app
+    volumes:
+      - ./terraform:/app
+      #- ~/.aws:/app/terraform/.aws
+
+  aws:
+    image: amazon/aws-cli
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_SESSION_TOKEN:
+      AWS_DEFAULT_REGION:
+    volumes:
+      - .:/aws
+
+  trivy:
+    image: aquasec/trivy:latest
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      SYSTEM_ACCESSTOKEN:
+      AWS_DEFAULT_REGION:
+      CI:
+    volumes:
+      - ./terraform:/app:rw
+
+  tflint:
+    image: ghcr.io/terraform-linters/tflint:latest
+    volumes:
+      - ./terraform:/data:rw
+
+  terraform_docs:
+    image: quay.io/terraform-docs/terraform-docs:0.16.0
+    volumes:
+      - ./terraform:/terraform_docs
+
+  node:
+    image: node:21.4.0
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      SYSTEM_ACCESSTOKEN:
+
+  frontend:
+    image: frontend:latest
+    working_dir: /app
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      SYSTEM_ACCESSTOKEN:
+
+  # node-tests:
+  #   image: node:21.4.0
+  #   working_dir: /app
+  #   volumes:
+  #     - ./terraform/lambdas/user-login:/app
+  #     - ./terraform/lambdas/node_modules:/app/node_modules
+
+      # lambda-tests:
+  #   image: lambda-tests:latest
+  #   # # working_dir: /app
+  #   # volumes:
+  #   #   - ./terraform/lambdas/user-login:/lambdas/user-login
