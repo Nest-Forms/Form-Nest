@@ -9,7 +9,7 @@ on:
       - 'Makefile*'
       - 'README.md'
       - 'frontend/README.md'
-      - .github/workflows/main.yml
+    #   - .github/workflows/main.yml
     branches:
       - '**'
 
