@@ -24,14 +24,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
       - id: tfcheck
         name: Check TF has changed
         run: |
-        # $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
-          $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-        # . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
-        # . .github/workflows/scripts/check-commit.sh terraform $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
+# $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
+          echo $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+# . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
+# . .github/workflows/scripts/check-commit.sh terraform $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
         env: 
           run_job: ${{ env.run_job }}
