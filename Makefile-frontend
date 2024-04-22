@@ -2,7 +2,8 @@
 
 RUN_NODE 	     = docker-compose run --rm node
 RUN_NODE_BASH    = docker-compose run --rm -it --volume ./app:/app --entrypoint bash node
-RUN_FRONTEND     = docker-compose up frontend
+RUN_FRONTEND     = docker-compose up frontend -d
+STOP_FRONTEND    = docker-compose down frontend
 
 .PHONY: build_and_run_forms
 build_and_run_forms: docker_build run_forms
@@ -14,6 +15,10 @@ build_and_install: npm_install npm_build
 .PHONY: run_nest
 run_nest:
 	$(RUN_FRONTEND)
+
+.PHONY: stop_nest
+stop_nest:
+	$(STOP_FRONTEND)
 
 # This builds the docker image for running the frontend in the UI (it allows you to expose port 3000 which cant be done using the node image)
 .PHONY: docker_build
