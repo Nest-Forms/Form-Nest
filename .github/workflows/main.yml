@@ -126,7 +126,9 @@ jobs:
         uses: actions/checkout@v2
       
       - name: check output value
-        run: steps.needs.check-if-frontend-changed.outputs.run_job
+        run: |
+          echo needs.check-if-frontend-changed.outputs.run_job
+          echo ${{ needs.check-if-frontend-changed.outputs.run_job }}
 
       - name: NPM Install
         run: make npm_install
