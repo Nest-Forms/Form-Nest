@@ -24,13 +24,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - id: tfcheck
+        id: tfcheck
       - name: Check TF has changed
         run: |
           . .github/workflows/scripts/check-commit.sh terraform
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
-          # echo "::set-output name=run_job::$run_job"
-          # echo $run_job
         env:
           run_job: ${{ env.run_job }}
 
@@ -45,7 +43,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - id: frontendcheck
-      - name: Check Frontend has changed
+        name: Check Frontend has changed
         run: |
           . .github/workflows/scripts/check-commit.sh frontend
           echo "frontend_run_job=$run_job" >> "$GITHUB_OUTPUT"
