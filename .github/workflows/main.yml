@@ -2,13 +2,13 @@ name: Terraform
 
 on:
   push:
-    paths-ignore:
-      - 'dump/**'
-      - 'dockerfile'
-      - 'docker-compose.yml'
-      - 'Makefile*'
-      - 'README.md'
-      - 'frontend/README.md'
+    # paths-ignore:
+    #   - 'dump/**'
+    #   - 'dockerfile'
+    #   - 'docker-compose.yml'
+    #   - 'Makefile*'
+    #   - 'README.md'
+    #   - 'frontend/README.md'
     #   - .github/workflows/main.yml
     branches:
       - '**'
@@ -16,9 +16,9 @@ on:
 jobs:
   check-if-terraform-changed:
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
+    # concurrency:
+    #   group: ${{ github.workflow }}-${{ github.ref }}
+    #   cancel-in-progress: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -31,9 +31,9 @@ jobs:
 
   check-if-frontend-changed:
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
+    # concurrency:
+    #   group: ${{ github.workflow }}-${{ github.ref }}
+    #   cancel-in-progress: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
