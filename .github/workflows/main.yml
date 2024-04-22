@@ -22,14 +22,13 @@ jobs:
     outputs:
       output1: ${{ steps.tfcheck.outputs.terraform_run_job }}
       output2: ${{ steps.checkfiles.outputs.terraform_files }}
+      output3: ${{ steps.checkfiles.outputs.terraform_files }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         id: tfcheck
       - name: Check TF has changed
         id: checkfiles
-        outputs:
-          output1: ${{ steps.checkfiles.outputs.terraform_files }}
         run: |
           . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
@@ -39,7 +38,7 @@ jobs:
           files: ${{ env.files }}
       
       - name: output files
-        run:  echo ${{ steps.checkfiles.outputs.terraform_files }}
+        run:  echo ${{ steps.checkfiles.outputs.output3 }}
 
 
   # check-if-frontend-changed:
