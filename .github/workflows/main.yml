@@ -33,7 +33,7 @@ jobs:
           # $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
           $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           # . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
-          . .github/workflows/scripts/check-commit.sh terraform $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
+          # . .github/workflows/scripts/check-commit.sh terraform $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
         env: 
           run_job: ${{ env.run_job }}
