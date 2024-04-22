@@ -1,11 +1,15 @@
 #/bin/bash
 folderToIgnore=$1
+GITHUB_SHA=$2
 
 echo folderToIgnore $folderToIgnore
+echo GITHUB_SHA $GITHUB_SHA
+#git log
 
-git log
+#git diff
 
-git diff
+#echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
+echo $(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA | xargs)"
 
 # echo "=============== list modified files ==============="
 # git diff --name-only HEAD~1 HEAD
@@ -30,6 +34,6 @@ git diff
 # done < files.txt
 
 # echo folderToIgnore $folderToIgnore
-run_job=true
-echo run_job $run_job
+# run_job=true
+# echo run_job $run_job
 export run_job

@@ -27,7 +27,7 @@ jobs:
         id: tfcheck
       - name: Check TF has changed
         run: |
-          . .github/workflows/scripts/check-commit.sh terraform
+          . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
         env:
           run_job: ${{ env.run_job }}
