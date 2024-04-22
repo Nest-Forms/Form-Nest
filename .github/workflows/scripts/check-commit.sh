@@ -3,12 +3,10 @@ folderToIgnore=$1
 files=$2
 
 echo folderToIgnore $folderToIgnore
-echo files
+echo files $files
 #git log
 
 #git diff
-
-echo $files
 
 # echo "=============== list modified files ==============="
 # git diff --name-only HEAD~1 HEAD

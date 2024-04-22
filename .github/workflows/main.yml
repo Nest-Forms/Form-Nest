@@ -21,16 +21,17 @@ jobs:
     #   cancel-in-progress: true
     outputs:
       output1: ${{ steps.tfcheck.outputs.terraform_run_job }}
-      output2: ${{ steps.checkfiles.outputs.terraform_files }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
         id: tfcheck
       - name: Check TF has changed
         id: checkfiles
         run: |
           # . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
-          . .github/workflows/scripts/check-commit.sh terraform $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)
+          . .github/workflows/scripts/check-commit.sh terraform $( git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
         env: 
           run_job: ${{ env.run_job }}
