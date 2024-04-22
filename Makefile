@@ -20,7 +20,7 @@ RUN_TF             = @docker-compose run --rm terraform
 RUN_TF_BASH        = @docker-compose run --rm --entrypoint sh terraform
 RUN_TF_LINT		   = @docker-compose run --rm --entrypoint=/bin/sh tflint -c "tflint --init && tflint --no-module" tflint 
 RUN_TF_DOCS        = @docker-compose run --rm terraform_docs
-RUN_AWS_CLI		   = @docker-compose run --rm entrypoint aws terraform
+RUN_AWS_CLI		   = @docker-compose run --rm --entrypoint sh aws
 RUN_TRIVY	       = @docker-compose run --rm -w /app trivy
 
 .PHONY: all
@@ -89,3 +89,7 @@ terraform_docs:
 	echo -e --- $(CYAN)Creating Terraform Docs ...
 	$(RUN_TF_DOCS) markdown /terraform_docs > README.md
 
+.PHONY: aws_cli
+aws_cli:
+	echo -e --- $(CYAN)Launching AWS cli ...
+	$(RUN_AWS_CLI)

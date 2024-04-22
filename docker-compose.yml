@@ -13,6 +13,14 @@ services:
       - ./terraform:/app
       #- ~/.aws:/app/terraform/.aws
 
+  aws:
+    image: amazon/aws-cli
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_SESSION_TOKEN:
+      AWS_DEFAULT_REGION:
+
   trivy:
     image: aquasec/trivy:latest
     environment:
