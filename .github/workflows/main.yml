@@ -27,10 +27,13 @@ jobs:
       - id: tfcheck
         name: Check TF has changed
         run: |
-          echo $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          echo $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
         env: 
           run_job: ${{ env.run_job }}
+# $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
+# . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
+# . .github/workflows/scripts/check-commit.sh terraform $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
 
   # check-if-frontend-changed:
   #   runs-on: ubuntu-latest
