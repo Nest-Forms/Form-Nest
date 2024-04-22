@@ -4,11 +4,11 @@ resource "aws_apigatewayv2_api" "my_http_api" {
   description   = "HTTP API for user management"
 
   cors_configuration {
-    allow_headers = ["Content-Type", "X-Amz-Date", "Authorization", "X-Api-Key", "X-Amz-Security-Token"]
-    allow_methods = ["OPTIONS", "GET", "POST", "PUT", "DELETE"]
-    allow_origins = ["*"]
+    allow_headers  = ["Content-Type", "X-Amz-Date", "Authorization", "X-Api-Key", "X-Amz-Security-Token"]
+    allow_methods  = ["OPTIONS", "GET", "POST", "PUT", "DELETE"]
+    allow_origins  = ["*"]
     expose_headers = ["Content-Length"]
-    max_age = 300
+    max_age        = 300
   }
 }
 

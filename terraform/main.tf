@@ -1,4 +1,17 @@
-# Configure the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.45.0"
+    }
+    archive = {
+      source  = "hashicorp/archive"
+      version = "~> 2.4.2"
+    }
+  }
+}
+
+# # Configure the AWS provider
 provider "aws" {
   region = "eu-west-2"
 }
@@ -9,7 +22,13 @@ terraform {
     bucket         = "nest-forms-dev-terraform-state"
     key            = "terraform/terraform.tfstate"
     region         = "eu-west-2"
-    dynamodb_table = "form-nest-terraform-state-lock" 
+    dynamodb_table = "form-nest-terraform-state-lock"
     encrypt        = true
   }
 }
+
+# module "s3" {
+#   source            = "./s3"
+#   environment       = var.environment
+#   enable_versioning = var.enable_versioning
+# }

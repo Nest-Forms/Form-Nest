@@ -59,13 +59,13 @@ data "archive_file" "force_password_change_reset_zip" {
 }
 
 resource "aws_lambda_function" "force_password_change_lambda" {
-  function_name = "nest-force-password-change"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "nest-force-password-change"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/force-password-change.zip"
   source_code_hash = filebase64sha256(data.archive_file.force_password_change_reset_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.force_password_change_reset_zip]
 
@@ -73,19 +73,19 @@ resource "aws_lambda_function" "force_password_change_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
 
 resource "aws_lambda_function" "confirm_pw_reset_lambda" {
-  function_name = "nest-confirm-password-reset"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "nest-confirm-password-reset"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/confirm-password-reset.zip"
   source_code_hash = filebase64sha256(data.archive_file.confirm_pw_reset_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.confirm_pw_reset_zip]
 
@@ -93,19 +93,19 @@ resource "aws_lambda_function" "confirm_pw_reset_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
 
 resource "aws_lambda_function" "initiate_pw_reset_lambda" {
-  function_name = "nest-initiate-password-reset"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "nest-initiate-password-reset"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/initiate-password-reset.zip"
   source_code_hash = filebase64sha256(data.archive_file.initiate_pw_reset_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.initiate_pw_reset_zip]
 
@@ -113,19 +113,19 @@ resource "aws_lambda_function" "initiate_pw_reset_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
 
 resource "aws_lambda_function" "resend_verification_lambda" {
-  function_name = "nest-resend-verification"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "nest-resend-verification"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/resend-verification.zip"
   source_code_hash = filebase64sha256(data.archive_file.resend_verification_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.resend_verification_zip]
 
@@ -133,19 +133,19 @@ resource "aws_lambda_function" "resend_verification_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
 
 resource "aws_lambda_function" "email_verification_lambda" {
-  function_name = "nest-email-verification"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "nest-email-verification"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/email-verification.zip"
   source_code_hash = filebase64sha256(data.archive_file.email_verification_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.email_verification_zip]
 
@@ -153,19 +153,19 @@ resource "aws_lambda_function" "email_verification_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
 
 resource "aws_lambda_function" "change_password_lambda" {
-  function_name = "nest-change-password"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "nest-change-password"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/change-password.zip"
   source_code_hash = filebase64sha256(data.archive_file.change_password_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.change_password_zip]
 
@@ -173,19 +173,19 @@ resource "aws_lambda_function" "change_password_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
 
 resource "aws_lambda_function" "admin_add_user_lambda" {
-  function_name = "nest-admin-add-user"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "nest-admin-add-user"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/admin-add-user.zip"
   source_code_hash = filebase64sha256(data.archive_file.admin_add_user_lambda_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.admin_add_user_lambda_zip]
 
@@ -193,19 +193,19 @@ resource "aws_lambda_function" "admin_add_user_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
 
 resource "aws_lambda_function" "get_user_lambda" {
-  function_name = "nest-get-user"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "nest-get-user"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/get-user.zip"
   source_code_hash = filebase64sha256(data.archive_file.get_user_lambda_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.get_user_lambda_zip]
 
@@ -213,19 +213,19 @@ resource "aws_lambda_function" "get_user_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
 
 resource "aws_lambda_function" "user_management_lambda" {
-  function_name = "UserManagementFunction"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "UserManagementFunction"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/create-users.zip"
   source_code_hash = filebase64sha256(data.archive_file.create_users_lambda_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.create_users_lambda_zip]
 
@@ -233,19 +233,19 @@ resource "aws_lambda_function" "user_management_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool_client.my_user_pool_client.id
-      TABLE_NAME = aws_dynamodb_table.company_table.name
+      TABLE_NAME   = aws_dynamodb_table.company_table.name
     }
   }
 }
 
 resource "aws_lambda_function" "user_login_lambda" {
-  function_name = "UserLoginAuth"
-  handler       = "index.handler"
-  role          = aws_iam_role.lambda_exec_role.arn
-  runtime       = "nodejs20.x" 
+  function_name    = "UserLoginAuth"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  runtime          = "nodejs20.x"
   filename         = "${path.module}/lambdas/user-login.zip"
   source_code_hash = filebase64sha256(data.archive_file.user_login_lambda_zip.output_path)
-  timeout = 10
+  timeout          = 10
 
   depends_on = [data.archive_file.user_login_lambda_zip]
 
@@ -253,7 +253,7 @@ resource "aws_lambda_function" "user_login_lambda" {
     variables = {
       REGION       = var.region
       USER_POOL_ID = aws_cognito_user_pool.my_user_pool.id
-      CLIENT_ID = aws_cognito_user_pool_client.my_user_pool_client.id
+      CLIENT_ID    = aws_cognito_user_pool_client.my_user_pool_client.id
     }
   }
 }
@@ -290,7 +290,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ],
-        Effect = "Allow",
+        Effect   = "Allow",
         Resource = "*"
       },
     ],

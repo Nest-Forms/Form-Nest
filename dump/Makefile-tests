@@ -1,0 +1,29 @@
+
+
+RUN_NODE_TESTS      = docker-compose run --rm node-tests
+RUN_NODE_TESTS_BASH = docker-compose run --rm -it --volume ./app:/app --entrypoint bash node
+
+.PHONY: npm_install_tests
+npm_install_tests:
+	echo -e --- $(CYAN)Running npm install ...
+	$(RUN_NODE_TESTS) npm install --save-dev jest
+
+# 	$(RUN_NODE) npm install tape --save-dev
+
+# .PHONY: npm_bash_lambda
+# npm_bash_lambda: 
+# 	echo -e --- $(CYAN)Running npm in bash ...
+# 	$(RUN_NODE_TESTS_BASH)
+
+.PHONY: npm_test_lambda
+npm_test_lambda:
+	echo -e --- $(CYAN)Running jest tests ...
+	$(RUN_NODE_TESTS) npm test
+
+# # .PHONY: npm_clean
+# # npm_clean:
+# # 	echo -e --- $(CYAN)Running npm clean ...
+# # 	$(RUN_NODE) sh -c 'rm -rf node_modules; rm -rf build'
+
+# # `npm run eject`
+# ### `npm test`
