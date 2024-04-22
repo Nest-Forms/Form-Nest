@@ -15,7 +15,6 @@ export const handler = async (event) => {
         NEW_PASSWORD: newPassword,
       },
     };
-    console.log(params)
 
     await cognitoClient.send(new RespondToAuthChallengeCommand(params));
     return {
