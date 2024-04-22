@@ -19,14 +19,16 @@ jobs:
     # concurrency:
     #   group: ${{ github.workflow }}-${{ github.ref }}
     #   cancel-in-progress: true
+    outputs:
+      output1: ${{ steps.tfcheck.outputs.terraform_run_job }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - id: tfcheck
       - name: Check TF has changed
         run: |
           . .github/workflows/scripts/check-commit.sh terraform
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
-          echo $GITHUB_OUTPUT
           # echo "::set-output name=run_job::$run_job"
           # echo $run_job
         env:
@@ -37,14 +39,16 @@ jobs:
     # concurrency:
     #   group: ${{ github.workflow }}-${{ github.ref }}
     #   cancel-in-progress: true
+    outputs:
+      output1: ${{ steps.frontendcheck.outputs.frontend_run_job }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - id: frontendcheck
       - name: Check Frontend has changed
         run: |
           . .github/workflows/scripts/check-commit.sh frontend
           echo "frontend_run_job=$run_job" >> "$GITHUB_OUTPUT"
-          echo $GITHUB_OUTPUT
           # echo "::set-output name=run_job::$run_job"
           # echo $run_job
         env:
@@ -133,7 +137,7 @@ jobs:
       
       - name: check output value
         run: |
-          echo ${{ needs.check-if-frontend-changed.outputs.frontend_run_job }}
+          echo ${{ needs.check-if-frontend-changed.outputs.output1 }}
 
       - name: NPM Install
         run: make npm_install
