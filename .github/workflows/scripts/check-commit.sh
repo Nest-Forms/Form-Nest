@@ -9,6 +9,7 @@ echo GITHUB_SHA $GITHUB_SHA
 #git diff
 
 #echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
+git diff-tree --no-commit-id --name-only -r $GITHUB_SHA | xargs
 echo files=$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA | xargs)
 echo $files
 
