@@ -9,7 +9,7 @@ echo GITHUB_SHA $GITHUB_SHA
 #git diff
 
 #echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
-echo $(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA | xargs)"
+echo $(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA | xargs)
 
 # echo "=============== list modified files ==============="
 # git diff --name-only HEAD~1 HEAD
