@@ -24,11 +24,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        # with:
-        #   fetch-depth: 0
-        id: tfcheck
-      - name: Check TF has changed
-        id: checkfiles
+        with:
+          fetch-depth: 0
+      - id: tfcheck
+        name: Check TF has changed
         run: |
         # $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c '^proxy' )
           $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
