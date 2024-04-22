@@ -9,7 +9,7 @@ RED = '\033[1;31m'
 CYAN = '\033[0;36m'
 
 export AWS_DEFAULT_REGION ?= us-east-2
-#CONFIG ?= dev
+CONFIG ?= dev
 
 TF_PLAN            = config/$(CONFIG).plan
 TF_PLAN_JSON       = $(TF_PLAN).json
@@ -43,9 +43,9 @@ plan: init
 	$(RUN_TF) plan $(TF_VARS) -out $(TF_PLAN)
 
 .PHONY: plan_json
-plan_json:
+plan_json: plan
 	echo -e --- $(CYAN)Generating JSON Terraform deployment plan ...
-	$(RUN_TF_BASH) -c "terraform show -json $(TF_PLAN) | jq '.' > $(TF_PLAN_JSON)"
+	$(RUN_TF) show -json $(TF_PLAN) > terraform/$(TF_PLAN_JSON)
 
 .PHONY: apply
 apply: init
@@ -89,14 +89,3 @@ terraform_docs:
 	echo -e --- $(CYAN)Creating Terraform Docs ...
 	$(RUN_TF_DOCS) markdown /terraform_docs > README.md
 
-# .PHONY: deploy
-# deploy: init
-# 	@echo -e "$(GREEN)Running task: $@$(RESET)"
-# 	$(RUN_TG) apply $(WORKING_DIR)/$(TF_PLAN)
-# 	@echo "Done: $@"
-
-# .PHONY: destroy
-# destroy: init
-# 	@echo -e "$(GREEN)Running task: $@$(RESET)"
-# 	$(RUN_TG) destroy
-# 	@echo "Done: $@"
