@@ -26,6 +26,7 @@ jobs:
         run: |
           . .github/workflows/scripts/check-commit.sh terraform
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
+          echo $GITHUB_OUTPUT
           # echo "::set-output name=run_job::$run_job"
           # echo $run_job
         env:
@@ -43,13 +44,14 @@ jobs:
         run: |
           . .github/workflows/scripts/check-commit.sh frontend
           echo "frontend_run_job=$run_job" >> "$GITHUB_OUTPUT"
+          echo $GITHUB_OUTPUT
           # echo "::set-output name=run_job::$run_job"
           # echo $run_job
         env:
           run_job: ${{ env.run_job }}
 
   terraform-checks:
-    # if: jobs.check-if-terraform-changed.steps.check-if-terraform-changed.outputs.terraform_run_job == 'true'
+    # if: needs.check-if-terraform-changed.outputs.terraform_run_job == 'true'
     runs-on: ubuntu-latest
     needs: check-if-terraform-changed
     steps:
@@ -122,8 +124,7 @@ jobs:
           AWS_DEFAULT_REGION: eu-west-2
 
   frontend-build:
-    # if: steps.check-if-frontend-changed.outputs.frontend_run_job == 'true'
-    # if: jobs.check-if-frontend-changed.steps.check-if-frontend-changed.outputs.terraform_run_job == 'true'
+    # if: needs.check-if-frontend-changed.outputs.terraform_run_job == 'true'
     runs-on: ubuntu-latest
     needs: check-if-frontend-changed
     steps:
@@ -132,7 +133,7 @@ jobs:
       
       - name: check output value
         run: |
-          echo ${{ jobs.check-if-frontend-changed.steps.check-if-frontend-changed.outputs.frontend_run_job }}
+          echo ${{ needs.check-if-frontend-changed.outputs.frontend_run_job }}
 
       - name: NPM Install
         run: make npm_install
