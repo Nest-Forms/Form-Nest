@@ -23,7 +23,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Check TF has changed
-        run: . .github/workflows/check-commit.sh terraform
+        run: . .github/workflows/scripts/check-commit.sh terraform
 
   check-if-frontend-changed:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Check TF has changed
-        run: . .github/workflows/check-commit.sh frontend
+        run: . .github/workflows/scripts/check-commit.sh frontend
 
   terraform-checks:
     if: needs.check-if-terraform-changed.outputs.run_job == 'true'
