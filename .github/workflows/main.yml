@@ -132,7 +132,7 @@ jobs:
       
       - name: check output value
         run: |
-          echo jobs.check-if-frontend-changed.steps.check-if-frontend-changed.outputs.frontend_run_job
+          echo ${{ jobs.check-if-frontend-changed.steps.check-if-frontend-changed.outputs.frontend_run_job }}
 
       - name: NPM Install
         run: make npm_install
