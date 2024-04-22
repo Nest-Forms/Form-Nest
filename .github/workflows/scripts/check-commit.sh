@@ -18,15 +18,15 @@ git log
 #     echo $file
 #     if [[ $file != $folderToIgnore/* ]]; then
 #         echo "This modified file is not under the '$folderToIgnore' folder."
-#         eval "$folderToIgnore=false"
+#         run_job=false
 #         #echo "::set-output name=run_job::false"
 #         break
 #     else
-#         #echo "::set-output name=run_job::true"
+#         run_job=true
 #         eval "$folderToIgnore=true"
 #     fi
 # done < files.txt
 
 # echo folderToIgnore $folderToIgnore
 
-export $folderToIgnore
+export run_job
