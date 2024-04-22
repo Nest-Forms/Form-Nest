@@ -22,7 +22,6 @@ jobs:
     outputs:
       output1: ${{ steps.tfcheck.outputs.terraform_run_job }}
       output2: ${{ steps.checkfiles.outputs.terraform_files }}
-      output3: ${{ steps.checkfiles.outputs.terraform_files }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -38,7 +37,7 @@ jobs:
           files: ${{ env.files }}
       
       - name: output files
-        run:  echo ${{ steps.checkfiles.outputs.output3 }}
+        run:  echo ${{ steps.checkfiles.outputs.output2 }}
 
 
   # check-if-frontend-changed:
