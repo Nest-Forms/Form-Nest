@@ -25,6 +25,8 @@ jobs:
       - name: Check TF has changed
         run: |
           . .github/workflows/scripts/check-commit.sh terraform
+          echo $run_job
+          echo ${{ env.run_job }}
         env:
           run_job: ${{ env.run_job }}
 
@@ -39,7 +41,9 @@ jobs:
       - name: Check Frontend has changed
         run: |
           . .github/workflows/scripts/check-commit.sh frontend
-        env: 
+          echo $run_job
+          echo ${{ env.run_job }}
+        env:
           run_job: ${{ env.run_job }}
 
   terraform-checks:
