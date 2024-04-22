@@ -5,6 +5,8 @@ echo folderToIgnore $folderToIgnore
 
 git log
 
+git diff
+
 # echo "=============== list modified files ==============="
 # git diff --name-only HEAD~1 HEAD
 # # git diff --name-only HEAD^ HEAD
