@@ -29,5 +29,5 @@ git log
 
 # echo folderToIgnore $folderToIgnore
 run_job=false
-echo $run_job
+echo run_job $run_job
 export run_job
