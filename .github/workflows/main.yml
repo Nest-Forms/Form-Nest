@@ -29,16 +29,11 @@ jobs:
       - name: Check TF has changed
         id: checkfiles
         run: |
-          . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
+          # . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
+          . .github/workflows/scripts/check-commit.sh terraform $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
-          echo "$terraform_files=$files" >> "$GITHUB_OUTPUT"
         env: 
           run_job: ${{ env.run_job }}
-          files: ${{ env.files }}
-      
-      - name: output files
-        run:  echo ${{ steps.checkfiles.outputs.output2 }}
-
 
   # check-if-frontend-changed:
   #   runs-on: ubuntu-latest
