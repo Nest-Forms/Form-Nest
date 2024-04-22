@@ -31,7 +31,8 @@ jobs:
         run: |
           . .github/workflows/scripts/check-commit.sh terraform ${{ github.sha }}
           echo "terraform_run_job=$run_job" >> "$GITHUB_OUTPUT"
-          echo "$terraform_files=$files" >> "$GITHUB_OUTPUT"
+          echo "terraform_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)" >> "$GITHUB_OUTPUT"
+          # echo "$terraform_files=$files" >> "$GITHUB_OUTPUT"
         env:
           run_job: ${{ env.run_job }}
           files: ${{ env.files }}
