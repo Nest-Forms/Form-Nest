@@ -1,5 +1,5 @@
 locals {
-  bucketName = "${var.environment}.forms-nest.co.uk"
+  bucketName = "${var.environment}.nest-forms.co.uk"
 }
 
 resource "aws_s3_bucket" "bucket" {
