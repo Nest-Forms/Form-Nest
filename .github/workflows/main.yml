@@ -24,8 +24,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        # with:
+        #   fetch-depth: 0
         id: tfcheck
       - name: Check TF has changed
         id: checkfiles
