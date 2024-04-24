@@ -102,10 +102,6 @@ resource "aws_acm_certificate" "cert" {
   provider          = aws.cloudfront
 }
 
-data "aws_vpc" "default" {
-  default = true
-}
-
 data "aws_route53_zone" "zone" {
   name         = "nest-forms.co.uk" # This will need to be parameterised when we create new accounts
   private_zone = false
