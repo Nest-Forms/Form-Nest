@@ -8,20 +8,3 @@ terraform {
     encrypt        = true
   }
 }
-
-module "s3" {
-  source                     = "./s3"
-  environment                = var.environment
-  enable_versioning          = var.enable_versioning
-  cloudfront_s3_distribution = module.cloudfront.distribution
-}
-
-module "cloudfront" {
-  source       = "./cloudfront"
-  bucket_name  = module.s3.bucket.id
-  environment  = var.environment
-  cors_origins = var.cors_origins
-  providers = {
-    aws.cloudfront = aws.cloudfront
-  }
-}

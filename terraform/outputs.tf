@@ -9,3 +9,11 @@ output "cognito_app_client_id" {
 output "company_db_table_name" {
   value = aws_dynamodb_table.company_table.name
 }
+
+output "distribution" {
+  value = aws_cloudfront_distribution.cf_s3_distribution.arn
+}
+
+output "bucket" {
+  value = aws_s3_bucket.bucket.id
+}
