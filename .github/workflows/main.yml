@@ -25,17 +25,21 @@ jobs:
       
       - name: Comply
         run: .github/workflows/scripts/comply.sh
-      
-      - name: Run tfsec
-        uses: aquasecurity/tfsec-sarif-action@21ded20e8ca120cd9d3d6ab04ef746477542a608
-        with:
-          sarif_file: tfsec.sarif
 
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+      - name: tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
         with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: tfsec.sarif
+          working_directory: terraform
+      # - name: Run tfsec
+      #   uses: aquasecurity/tfsec-sarif-action@21ded20e8ca120cd9d3d6ab04ef746477542a608
+      #   with:
+      #     sarif_file: tfsec.sarif
+
+      # - name: Upload SARIF file
+      #   uses: github/codeql-action/upload-sarif@v2
+      #   with:
+      #     # Path to SARIF file relative to the root of the repository
+      #     sarif_file: tfsec.sarif
     
   terraform-plan-dev:
     runs-on: ubuntu-latest
