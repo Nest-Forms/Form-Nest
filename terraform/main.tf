@@ -1,21 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.45.0"
-    }
-    archive = {
-      source  = "hashicorp/archive"
-      version = "~> 2.4.2"
-    }
-  }
-}
-
-# # Configure the AWS provider
-provider "aws" {
-  region = "eu-west-2"
-}
-
 # Terraform Backend Configuration for S3 with State Locking using DynamoDB
 terraform {
   backend "s3" {
@@ -28,7 +10,18 @@ terraform {
 }
 
 module "s3" {
-  source            = "./s3"
-  environment       = var.environment
-  enable_versioning = var.enable_versioning
+  source                     = "./s3"
+  environment                = var.environment
+  enable_versioning          = var.enable_versioning
+  cloudfront_s3_distribution = module.cloudfront.distribution
+}
+
+module "cloudfront" {
+  source       = "./cloudfront"
+  bucket_name  = module.s3.bucket.id
+  environment  = var.environment
+  cors_origins = var.cors_origins
+  providers = {
+    aws.cloudfront = aws.cloudfront
+  }
 }
