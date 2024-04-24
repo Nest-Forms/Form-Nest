@@ -23,12 +23,12 @@ resource "aws_cloudfront_distribution" "cf_s3_distribution" {
   aliases = ["${var.environment}.nest-forms.co.uk"]
 
   default_cache_behavior {
-    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-    cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = local.s3_origin_id
-    cache_policy_id        = data.aws_cloudfront_cache_policy.caching_optimised.id
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
+    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
+    cached_methods             = ["GET", "HEAD"]
+    target_origin_id           = local.s3_origin_id
+    cache_policy_id            = data.aws_cloudfront_cache_policy.caching_optimised.id
+    compress                   = true
+    viewer_protocol_policy     = "redirect-to-https"
     response_headers_policy_id = aws_cloudfront_response_headers_policy.cors_response_headers_policy.id
   }
 
