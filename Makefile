@@ -26,6 +26,11 @@ RUN_TRIVY	       = @docker-compose run --rm -w /app trivy
 .PHONY: all
 all: plan apply
 
+.PHONY: tfbash
+tfbash:
+	echo -e --- $(CYAN)Running Terraform in a container...
+	$(RUN_TF_BASH)
+
 .PHONY: validate
 validate:
 	echo -e --- $(CYAN)Validating Terraform ...

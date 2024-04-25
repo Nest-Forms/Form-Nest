@@ -1,12 +1,8 @@
-locals {
-  bucketName = "${var.environment}.nest-forms.co.uk"
-}
-
 resource "aws_s3_bucket" "bucket" {
-  bucket        = local.bucketName
+  bucket        = var.bucket_name
   force_destroy = true
   tags = {
-    Name = local.bucketName
+    Name = var.bucket_name
   }
 }
 
@@ -73,4 +69,13 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_configuration" {
       days_after_initiation = 7
     }
   }
+}
+
+resource "aws_s3_bucket_logging" "bucket_logging" {
+  bucket = aws_s3_bucket.bucket.id
+
+  # Ideally this would be a centralised bucket created by an infra repo
+  # and then pulled in via data.ssm_parameter.logging_bucket_name.value
+  target_bucket = aws_s3_bucket.logging.id
+  target_prefix = "${var.bucket_name}/"
 }
