@@ -48,4 +48,29 @@ resource "aws_s3_bucket_website_configuration" "forms_nest" {
   }
 }
 
-### Lifecycle policy NEEDED!! Keep latest + 1 historical
+# Keep 1 non current version
+resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_configuration" {
+  bucket = aws_s3_bucket.bucket.id
+
+  rule {
+    id     = "ExpireNonCurrentVersions"
+    status = "Enabled"
+    noncurrent_version_expiration {
+      noncurrent_days = 1
+      newer_noncurrent_versions = 1
+    }
+  }
+
+  rule {
+    id     = "ExpireDeleteMarkers"
+    status = "Enabled"
+
+    expiration {
+      expired_object_delete_marker = true
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
